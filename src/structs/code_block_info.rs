@@ -1,4 +1,3 @@
-
 use std::collections::HashMap;
 
 use pulldown_cmark::CodeBlockKind;
@@ -28,10 +27,7 @@ impl TryFrom<CodeBlockKind<'_>> for CodeBlockInfo {
                         .map(Option::unwrap)
                         .map(|(s1, s2)| (s1.to_owned(), s2.to_owned())),
                 );
-                Ok(Self {
-                    language,
-                    values,
-                })
+                Ok(Self { language, values })
             }
             _ => Err(CodeBlockInfoErrorType::IndentedCodeBlock),
         }

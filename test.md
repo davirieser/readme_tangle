@@ -33,17 +33,17 @@ H2 Heading
 
 ---
 
-[Link](http://a.com)
+[](http://a.com)
 
-[Link][1]
+[][1]
 
 [1]: http://b.org
 
 ---
 
-![Image](http://url/a.png)
+![](http://url/a.png)
 
-![Image][1]
+![][1]
 
 [1]: http://url/b.jpg
 

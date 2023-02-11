@@ -1,8 +1,7 @@
-
-use std::path::Path;
+use pulldown_cmark::{Event, Options, Parser, Tag};
 use std::fs::File;
 use std::io::Read;
-use pulldown_cmark::{Parser, Options, Event, Tag};
+use std::path::Path;
 
 use crate::structs::CodeBlockInfo;
 
@@ -18,7 +17,6 @@ pub fn read_file<P: AsRef<Path>>(path: P) -> Option<String> {
 pub fn get_parser(input: &str) -> Parser {
     Parser::new_ext(input, Options::from(Options::ENABLE_TASKLISTS))
 }
-
 
 fn get_code_blocks<'a>(input: &'a str) -> Box<dyn Iterator<Item = CodeBlockInfo> + 'a> {
     let mut acc = vec![];
