@@ -4,7 +4,7 @@ mod printer;
 mod structs;
 mod util;
 
-use printer::{print_parser_indented, print_parser_raw, print_readme};
+use printer::{print_readme, print_tags_indented, print_tags_raw};
 use structs::CodeBlockInfo;
 use util::{get_parser, read_file};
 
@@ -87,9 +87,9 @@ fn main() {
             if let Some(contents) = read_file(path) {
                 let parser = get_parser(&contents);
                 if (pretty) {
-                    print_parser_indented(parser, show_start_end_tags);
+                    print_tags_indented(parser, show_start_end_tags);
                 } else {
-                    print_parser_raw(parser);
+                    print_tags_raw(parser);
                 }
             }
         }
@@ -97,18 +97,12 @@ fn main() {
             let input = read_file(args.in_file).unwrap();
 
             match args.out_file {
-                Some(path) => match OpenOptions::new()
-                    .read(true)
-                    .write(true)
-                    .create(true)
-                    .open(path)
-                {
+                Some(path) => match File::create(path) {
                     Ok(mut f) => write(&input, &mut f),
                     Err(e) => panic!("{}", e),
                 },
                 None => {
-                    let stdout = stdout();
-                    write(&input, &mut stdout.lock());
+                    write(&input, &mut stdout().lock());
                 }
             }
             fn write(input: &str, out: &mut dyn Write) {

@@ -35,17 +35,9 @@ H2 Heading
 
 [](http://a.com)
 
-[][1]
-
-[1]: http://b.org
-
 ---
 
 ![](http://url/a.png)
-
-![][1]
-
-[1]: http://url/b.jpg
 
 ---
 
@@ -59,6 +51,10 @@ H2 Heading
 
 - List
 - List
+- List
+	- SubList
+	- SubList
+		- SubSubList
 - List
 
 ---

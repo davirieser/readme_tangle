@@ -22,9 +22,7 @@ impl TryFrom<CodeBlockKind<'_>> for CodeBlockInfo {
                 let language = infos.next().map(str::to_owned);
                 let values = HashMap::from_iter(
                     infos
-                        .map(|s| s.split_once('='))
-                        .filter(Option::is_some)
-                        .map(Option::unwrap)
+                        .filter_map(|s| s.split_once('='))
                         .map(|(s1, s2)| (s1.to_owned(), s2.to_owned())),
                 );
                 Ok(Self { language, values })
