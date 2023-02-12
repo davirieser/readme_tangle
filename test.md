@@ -84,6 +84,10 @@ fn main() {
 
 ````java file=main.java
 class a {
-	
+
 }
 ````
+
+	fn main() {
+		
+	}

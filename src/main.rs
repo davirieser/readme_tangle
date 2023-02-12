@@ -2,11 +2,13 @@
 
 mod printer;
 mod structs;
+mod tangle;
 mod util;
 
 use printer::{print_readme, print_tags_indented, print_tags_raw};
 use structs::CodeBlockInfo;
 use util::{get_parser, read_file};
+use tangle::tangle_file;
 
 use std::collections::HashMap;
 use std::fmt::{Debug, Display, Formatter, Result as FmtResult};
@@ -56,7 +58,7 @@ struct ParseArgs {
     path: PathBuf,
     #[arg(short = 'v', long, default_value_t = true, action = ArgAction::SetFalse)]
     pretty: bool,
-    #[arg(short, long, default_value_t = false)]
+    #[arg(short, long, default_value_t = true, action = ArgAction::SetFalse)]
     show_start_end_tags: bool,
 }
 
@@ -76,7 +78,9 @@ fn main() {
         CliCommand::Tangle(TangleArgs {
             path, auto_name, ..
         }) => {
-            // TODO
+            for p in path {
+                tangle_file(p);
+            }
         }
         CliCommand::Parse(ParseArgs {
             path,
@@ -89,7 +93,7 @@ fn main() {
                 if (pretty) {
                     print_tags_indented(parser, show_start_end_tags);
                 } else {
-                    print_tags_raw(parser);
+                    print_tags_raw(parser, show_start_end_tags);
                 }
             }
         }

@@ -4,8 +4,8 @@ use pulldown_cmark::CodeBlockKind;
 
 #[derive(Debug)]
 pub struct CodeBlockInfo {
-    language: Option<String>,
-    values: HashMap<String, String>,
+    pub(crate) language: Option<String>,
+    pub(crate) values: HashMap<String, String>,
 }
 
 pub enum CodeBlockInfoErrorType {
