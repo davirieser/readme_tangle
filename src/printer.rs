@@ -3,9 +3,17 @@ use std::{fmt::Display, io::Result};
 
 use pulldown_cmark::{CodeBlockKind, Event, LinkType, Parser, Tag};
 
-pub fn print_tags_raw(parser: Parser) {
-    for c in parser {
-        println!("{:?}", c);
+pub fn print_tags_raw(parser: Parser, show_start_end_tags: bool) {
+    if show_start_end_tags {
+        for c in parser {
+            println!("{:?}", c);
+        }
+    } else {
+        for c in parser {
+            if (!matches!(c, Event::Start(_) | Event::End(_))) {
+                println!("{:?}", c);
+            }
+        }
     }
 }
 
@@ -66,7 +74,7 @@ pub fn print_readme(parser: Parser, out: &mut dyn Write) {
             Event::Start(Tag::BlockQuote) => write!(out, "> "),
             Event::Start(Tag::CodeBlock(CodeBlockKind::Indented))
             | Event::End(Tag::CodeBlock(CodeBlockKind::Indented))
-            | Event::End(Tag::CodeBlock(CodeBlockKind::Fenced(_))) => write!(out, "```\n"),
+            | Event::End(Tag::CodeBlock(CodeBlockKind::Fenced(_))) => writeln!(out, "```"),
             Event::Start(Tag::CodeBlock(CodeBlockKind::Fenced(info))) => {
                 writeln!(out, "```{}", info)
             }
